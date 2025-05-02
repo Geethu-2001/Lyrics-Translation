@@ -1,0 +1,55 @@
+Malayalam–Tamil Song Translation Project
+🚀 Project Overview
+This project extracts, aligns, analyzes, and translates Malayalam song lyrics into Tamil using a neural translation model (mBART). It includes the following major components:
+
+✅ Extract song pairs from a ZIP archive
+✅ Analyze phonetic syllables, rhyme, and word boundaries
+✅ Tokenize text using mBART tokenizer
+✅ Train and evaluate a translation model using K-Fold cross-validation
+✅ Compute BLEU and TER metrics
+✅ Provide an interface for users to input Malayalam text files and get Tamil translations
+
+🏗 Project Structure
+bash
+Copy
+Edit
+/songs.zip  
+    /songs  
+        /song1  
+            malayalam.txt  
+            tamil.txt  
+        /song2  
+            malayalam.txt  
+            tamil.txt  
+main_script.py  
+translated_tamil_lyrics2.txt  
+README.md  
+requirements.txt  
+💡 How It Works
+1️⃣ ZIP Extraction:
+Unzips a folder containing paired malayalam.txt and tamil.txt files for each song.
+
+2️⃣ Alignment:
+Aligns the Malayalam and Tamil lines, ensuring both are paired by index for model training.
+
+3️⃣ Phonetic & Rhyme Feature Extraction:
+
+Splits Malayalam and Tamil words into syllables using regex.
+
+Extracts rhyme schemes from last syllables.
+
+Marks word boundaries for rhythm and linguistic analysis.
+
+4️⃣ Translation Preparation:
+Uses the mBART50 tokenizer to prepare text for training.
+
+5️⃣ Training & Evaluation:
+
+Trains the facebook/mbart-large-50-many-to-many-mmt model on the aligned lyrics.
+
+Uses 3-fold cross-validation.
+
+Evaluates with BLEU and TER metrics to assess translation quality.
+
+6️⃣ User Translation Tool:
+Allows the user to input any Malayalam lyrics .txt file and outputs a Tamil translation to translated_tamil_lyrics2.txt.
