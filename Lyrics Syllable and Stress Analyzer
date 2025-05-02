@@ -1,0 +1,99 @@
+# Malayalam Lyrics Syllable and Stress Analyzer
+
+This tool processes Malayalam song lyrics to extract syllables and identify stressed syllables using the `mlphon` phonetic analyzer.
+
+## Steps to Extract Syllables and Stress Information
+
+### 1️⃣ Install Dependencies
+Install the `mlphon` library:
+```bash
+!pip install mlphon
+```
+
+### 2️⃣ Upload the Lyrics File
+Upload your Malayalam lyrics text file (one line per line):
+```python
+from google.colab import files
+uploaded = files.upload()
+filename = list(uploaded.keys())[0]
+print("Uploaded file:", filename)
+```
+
+### 3️⃣ Set Up the Phonetic Analyzer
+```python
+import re
+from mlphon import PhoneticAnalyser
+
+mlphon = PhoneticAnalyser()
+```
+
+### 4️⃣ Define Stress Rules
+```python
+def is_stressed(syllable):
+    stress_markers = ['ാ', 'ീ', 'ൂ', 'േ', 'ൈ', 'ോ', 'ൌ']
+    stressed_vowels = ['ആ', 'ഈ', 'ഊ', 'ഓ', 'ഏ', 'ഐ', 'ഔ', 'ഏ']
+    return any(marker in syllable for marker in stress_markers) or syllable in stressed_vowels
+```
+
+### 5️⃣ Clean Each Line
+```python
+def clean_line(line):
+    return re.sub(r"[^\u0D00-\u0D7F\s]", "", line)
+```
+
+### 6️⃣ Analyze Each Line
+```python
+def analyze_line(line):
+    line = clean_line(line)
+    words = line.strip().split()
+
+    syllables = []
+    stressed_syllables = []
+
+    for word in words:
+        try:
+            word_syllables = mlphon.split_to_syllables(word)
+            syllables.extend(word_syllables)
+            stressed_syllables.extend([syl for syl in word_syllables if is_stressed(syl)])
+        except Exception as e:
+            print(f"Could not split '{word}' into syllables")
+
+    total = len(syllables)
+    stressed = len(stressed_syllables)
+    unstressed = total - stressed
+
+    return total, stressed, unstressed, syllables, stressed_syllables
+```
+
+### 7️⃣ Process the Entire File
+```python
+results = []
+with open(filename, 'r', encoding='utf-8') as f:
+    lines = f.readlines()
+
+for i, line in enumerate(lines):
+    if line.strip():
+        try:
+            total, stressed, unstressed, syllables, stressed_syllables = analyze_line(line)
+            results.append({
+                "Line No.": i + 1,
+                "Lyrics": line.strip(),
+                "Total Syllables": total,
+                "Stressed": stressed,
+                "Unstressed": unstressed,
+                "Syllables": syllables,
+                "Stressed Syllables": stressed_syllables
+            })
+        except Exception as e:
+            print(f"Error in line {i + 1}: {e}")
+```
+
+### 8️⃣ Generate Output as DataFrame
+```python
+import pandas as pd
+
+df = pd.DataFrame(results)
+pd.set_option('display.max_colwidth', None)
+df[["Line No.", "Lyrics", "Total Syllables", "Stressed", "Unstressed", "Syllables", "Stressed Syllables"]]
+```
+
