@@ -1,4 +1,7 @@
 🎵 Song Translation
+
+
+
 This project translates Malayalam song lyrics into other languages (like Tamil) and performs syllable splitting and stress analysis using the mlphon phonetic library.
 
 It combines AI-based translation (e.g., using mBART or similar models) with detailed phonetic analysis to help evaluate the quality and rhythm of translated lyrics.
