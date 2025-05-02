@@ -82,7 +82,7 @@ to validate translation quality on the aligned dataset.
 ## 🏆 Authors
 
 This project was done by **Geethu Krishna** and **Malini**  
-under the guidance of **Joe Cheri Ross Sir**
+under the guidance of **Dr Joe Cheri Ross Sir**
 
 ---
 
