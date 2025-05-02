@@ -1,4 +1,4 @@
-🎵 Malayalam-to-Tamil Song Translation Project
+🎵 Malayalam-to-Tamil Songs Lyrics Translation Project
 
 
 
